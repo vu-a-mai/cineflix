@@ -37,7 +37,7 @@ const Navbar = () => {
       </Link>
 
       <div className="nav-links">
-        // Home and My List
+        {/* nav links */}
         <Link href="/" className="nav-link">
           Home
         </Link>
@@ -47,7 +47,7 @@ const Navbar = () => {
       </div>
 
       <div className="nav-right">
-        // search bar
+        {/* search bar */}
         <div className="search">
           <input
             placeholder="Search movie..."
@@ -55,7 +55,7 @@ const Navbar = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          // search icon
+          {/* search icon */}
           <Search className="icon" />
           <img
             src="/assets/profile_icon.jpg"
@@ -63,7 +63,7 @@ const Navbar = () => {
             alt="profile"
             onClick={() => setDropdownMenu(!dropdownMenu)}
           />
-          // dropdown menu
+          {/* dropdown menu */}
           {dropdownMenu && (
             <div className="dropdown-menu">
               <Link href="/">Home</Link>
