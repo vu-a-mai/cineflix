@@ -12,7 +12,7 @@ const Home = async () => {
   const example = genres.slice(0, 2);
   
   // Log the first two genres
-  console.log(example);
+  //console.log(example);
   
   return (
     <div>

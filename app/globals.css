@@ -41,15 +41,15 @@
 }
 
 .error {
-  @apply text-pink-1 max-w-[380px] text-center;
+  @apply text-red-500 max-w-[380px] text-center;
 }
 
 .button {
-  @apply w-full px-5 py-3 mt-5 mb-7 rounded-xl cursor-pointer bg-pink-2 hover:bg-pink-1 text-white text-body-bold;
+  @apply w-full px-5 py-3 mt-5 mb-7 rounded-xl cursor-pointer bg-red-400 hover:bg-red-500 text-white text-body-bold;
 }
 
 .link {
-  @apply text-base-medium text-center text-white hover:text-pink-1;
+  @apply text-base-medium text-center text-white hover:text-red-500;
 }
 
 /* Navbar */
@@ -62,7 +62,7 @@
 }
 
 .nav-link {
-  @apply text-white text-heading3-bold cursor-pointer hover:text-pink-1;
+  @apply text-white text-heading3-bold cursor-pointer hover:text-red-500;
 }
 
 .nav-right {
@@ -74,7 +74,7 @@
 }
 
 .icon {
-  @apply size-7 cursor-pointer text-white hover:text-pink-1;
+  @apply size-7 cursor-pointer text-white hover:text-red-500;
 }
 
 .dropdown-menu {
@@ -82,7 +82,7 @@
 }
 
 .dropdown-menu > a {
-  @apply text-base-bold text-black-1 hover:text-pink-1 cursor-pointer;
+  @apply text-base-bold text-black-1 hover:text-red-500 cursor-pointer;
 }
 
 .search {
@@ -123,7 +123,7 @@
 }
 
 .hero-btn {
-  @apply flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl cursor-pointer bg-white text-body-bold hover:bg-pink-1 hover:text-white;
+  @apply flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl cursor-pointer bg-white text-body-bold hover:bg-red-500 hover:text-white;
 }
 
 /* All movies */
