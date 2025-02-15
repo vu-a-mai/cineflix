@@ -23,3 +23,11 @@ export const fetchGenreMovies = async () => {
 
   return genres;
 };
+
+// Description: This function fetches the movie details from the server
+export const searchMovies = async (query: string) => {
+  const data = await getApiResponse(`/search/movie?query=${query}`);
+  const searchMovies = data.results;
+
+  return searchMovies;
+}

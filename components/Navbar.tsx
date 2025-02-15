@@ -4,9 +4,13 @@
 import { Search } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  // use state
+  // use router
+  const router = useRouter();
+  
+  // use states
   const [search, setSearch] = useState<string>("");
   const [dropdownMenu, setDropdownMenu] = useState<boolean>(false);
 
@@ -32,6 +36,7 @@ const Navbar = () => {
 
   return (
     <div className={`navbar ${isScrolled && "bg-black-1"}`}>
+      {/* logo */}
       <Link href="/">
         <img src="/assets/logo.png" alt="logo" className="logo" />
       </Link>
@@ -55,23 +60,31 @@ const Navbar = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {/* search icon */}
-          <Search className="icon" />
-          <img
-            src="/assets/profile_icon.jpg"
-            className="profile"
-            alt="profile"
-            onClick={() => setDropdownMenu(!dropdownMenu)}
-          />
-          {/* dropdown menu */}
-          {dropdownMenu && (
-            <div className="dropdown-menu">
-              <Link href="/">Home</Link>
-              <Link href="/my-list">My List</Link>
-              <a href="">Log Out</a>
-            </div>
-          )}
+
+          <button disabled={search === ""}>
+            {/* search icon */}
+            <Search
+              className="icon"
+              onClick={() => router.push(`/search/${search}`)}
+            />
+          </button>
         </div>
+
+        <img
+          src="/assets/profile_icon.jpg"
+          className="profile"
+          alt="profile"
+          onClick={() => setDropdownMenu(!dropdownMenu)}
+        />
+
+        {/* dropdown menu */}
+        {dropdownMenu && (
+          <div className="dropdown-menu">
+            <Link href="/">Home</Link>
+            <Link href="/my-list">My List</Link>
+            <a href="">Log Out</a>
+          </div>
+        )}
       </div>
     </div>
   );
