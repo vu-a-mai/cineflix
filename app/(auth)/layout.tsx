@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import AuthProvider from "@context/AuthProvider";
+import ToasterContext from "@context/ToasterContext";
 
 // Importing the Inter font
 const inter = Inter({ subsets: ["latin"] });
 
 // Exporting the metadata
 export const metadata: Metadata = {
-  title: "Cine Flex",
-  description: "NextJS 15 Netflix Clone Project",
+  title: "Auth Cine Flex",
+  description: "NextJS 15 Auth Netflix Clone Project",
 };
 
-// Exporting the RootLayout component
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,9 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* Head */}
-      <body className={`${inter.className} bg-black-1`}>
-        {/* AuthProvider */}
-        <AuthProvider>{children}</AuthProvider>
+      <body className={inter.className}>
+        {/* ToasterContext */}
+        <ToasterContext />
+        {children}
       </body>
     </html>
   );
