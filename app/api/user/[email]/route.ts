@@ -2,12 +2,16 @@ import { connectToDB } from "@lib/mongoDB";
 import User from "@models/User";
 import { NextRequest } from "next/server";
 
+type RouteParams = {
+  params: Promise<{ email: string }>
+}
+
 // GET /api/user/[email]
 // Get user by email
 // Returns user
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { email: string } }
+  { params }: RouteParams
 ) => {
   try {
     // Connect to database
@@ -28,7 +32,7 @@ export const GET = async (
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (err: any) {
     console.log(err);
-    throw new Error(`Failed to get user: ${err.message}`);
+    return new Response(`Failed to get user: ${err.message}`, { status: 500 });
   }
 };
 
@@ -38,7 +42,7 @@ export const GET = async (
 // Returns updated user
 export const POST = async (
   req: NextRequest,
-  { params }: { params: { email: string } }
+  { params }: RouteParams
 ) => {
   try {
     // Connect to database
@@ -77,6 +81,6 @@ export const POST = async (
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (err: any) {
     console.log(err);
-    throw new Error(`Failed to get user: ${err.message}`);
+    return new Response(`Failed to update user: ${err.message}`, { status: 500 });
   }
 };

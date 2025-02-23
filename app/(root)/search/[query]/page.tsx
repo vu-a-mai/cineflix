@@ -1,10 +1,13 @@
 import Navbar from "@components/Navbar";
 import SearchResults from "@components/SearchResults";
 
+type SearchParams = {
+  params: Promise<{ query: string }>
+}
+
 // SearchPage component
-const SearchPage = ({ params }: { params: { query: string } }) => {
-    // get query from params
-  const query = params.query;
+const SearchPage = async ({ params }: SearchParams) => {    // get query from params
+    const { query } = await params;
 
   return (
     <>
