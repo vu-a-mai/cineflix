@@ -26,8 +26,21 @@ export const fetchGenreMovies = async () => {
 
 // Description: This function fetches the movie details from the server
 export const searchMovies = async (query: string) => {
+  // Fetch movie details
   const data = await getApiResponse(`/search/movie?query=${query}`);
+  
+  // Parse the response
   const searchMovies = data.results;
 
+  // return searchMovies
   return searchMovies;
+}
+
+// Description: This function fetches the movie details from the server
+export const fetchMovieDetails = async (id: number) => {
+  // Fetch movie details
+  const movieDetails = await getApiResponse(`/movie/${id}?append_to_response=videos`);
+
+  // return movieDetails
+  return movieDetails;
 }

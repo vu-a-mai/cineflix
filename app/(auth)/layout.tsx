@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import ToasterContext from "@context/ToasterContext";
+import AuthProvider from "@context/AuthProvider";
 
 // Importing the Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       {/* Head */}
       <body className={inter.className}>
-        {/* ToasterContext */}
-        <ToasterContext />
-        {children}
+        <AuthProvider>
+          {/* ToasterContext */}
+          <ToasterContext />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
