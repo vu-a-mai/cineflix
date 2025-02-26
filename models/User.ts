@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { connectToDB } from "@lib/mongoDB";
 
 /**
  * User Schema Definition
