@@ -1,31 +1,44 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import { connectToDB } from "@lib/mongoDB";
+import User from "@models/User";
 import { fetchMovieDetails } from "@actions/movieData";
-import { fetchMyList } from "@actions/user";
 import MovieCard from "@components/MovieCard";
 import Navbar from "@components/Navbar";
 import { Movie } from "@lib/types";
 
-// Enable Incremental Static Regeneration (ISR) for this page
-// This means the page will be statically generated at build time
-// and revalidated every 60 seconds in production
-// Benefits:
-// 1. Improved performance by serving cached pages
-// 2. Reduced database load by limiting direct queries
-// 3. Better user experience with faster page loads
-// 4. Automatic updates without manual redeployment
-export const revalidate = 60; // Revalidate every 60 seconds
-
-// MyList component displays the user's favorite movies
-// It uses ISR to balance between static generation benefits
-// and data freshness
+/**
+ * MyList Component - Server Side Component
+ * 
+ * Displays a user's list of favorite movies. This component handles:
+ * 1. Server-side authentication check using NextAuth
+ * 2. Database connection and user favorites retrieval
+ * 3. Parallel fetching of detailed movie information
+ * 
+ * Protected Route: Redirects to login if user is not authenticated
+ * 
+ * @returns {Promise<JSX.Element>} Rendered list of favorite movies
+ */
 const MyList = async () => {
-  // Fetch user's favorite movies from the database
-  // This data will be cached and revalidated according to the revalidate setting
-  const myList = await fetchMyList();
+  const session = await getServerSession(authOptions);
 
-  // Fetch detailed information for each movie in the user's favorites
-  // These requests are executed in parallel using Promise.all for better performance
+  if (!session) {
+    redirect("/login");
+  }
+
+  // Connect to database
+  await connectToDB();
+
+  // Find the user and their favorites
+  const user = await User.findOne({ email: session.user?.email }).select("favorites");
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Fetch detailed information for each movie in parallel
   const myListDetails = await Promise.all(
-    myList.map(async (movieId: number) => {
+    user.favorites.map(async (movieId: number) => {
       const movieDetails = await fetchMovieDetails(movieId);
       return movieDetails;
     })
@@ -35,8 +48,6 @@ const MyList = async () => {
     <>
       <Navbar />
       <div className="list">
-        {/* Render movie cards for each movie in the user's favorites
-            Each card displays the movie's details and allows user interaction */}
         {myListDetails.map((movie: Movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

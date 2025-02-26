@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
+import { connectToDB } from "@lib/mongoDB";
 
-// Define the User schema
-// This will be used to create a new collection in MongoDB
-// The collection will have the following fields:
-// - username: a required string
-// - email: a unique, required string
-// - password: a required string
-// - favorites: an array of numbers
+/**
+ * User Schema Definition
+ * Defines the structure and validation rules for user documents in MongoDB.
+ *
+ * @typedef {Object} User
+ * @property {string} username - The user's display name (required)
+ * @property {string} email - User's unique email address (required, unique)
+ * @property {string} password - User's hashed password (required)
+ * @property {number[]} favorites - Array of movie IDs that the user has favorited
+ */
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -23,12 +27,29 @@ const UserSchema = new mongoose.Schema({
   },
   favorites: {
     type: [{ type: Number }],
-    default: [],
+    default: [], // Initialize as empty array if not provided
   },
 });
 
-// Create the User model
-// The User model will be used to perform CRUD operations on the User collection
-const User = mongoose.models.User || mongoose.model("User", UserSchema);
+/**
+ * User Model Initialization
+ * 
+ * This section handles the creation/retrieval of the User model using a pattern
+ * that prevents model recompilation errors in development with hot reloading.
+ * 
+ * The try-catch block ensures that:
+ * 1. We reuse the existing model if it's already been compiled
+ * 2. We create a new model only if it hasn't been compiled yet
+ * This prevents the "Cannot overwrite model once compiled" error
+ */
+let User: any;
+
+try {
+  // Check if the model is already defined
+  User = mongoose.models.User || mongoose.model("User", UserSchema);
+} catch (error) {
+  // If not defined, create a new model
+  User = mongoose.model("User", UserSchema);
+}
 
 export default User;
