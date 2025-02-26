@@ -4,6 +4,9 @@ import MovieCard from "@components/MovieCard";
 import Navbar from "@components/Navbar";
 import { Movie } from "@lib/types";
 
+// Mark this route as dynamic to handle server-side functionality
+export const dynamic = 'force-dynamic';
+
 // MyList component will display the user's favorite movies
 const MyList = async () => {
   // Fetch user's favorite movies
